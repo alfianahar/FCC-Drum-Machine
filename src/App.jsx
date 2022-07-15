@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import React from 'react'
 
 const soundBank = {
   'Q': {
@@ -40,15 +39,49 @@ const soundBank = {
   }
 }
 
+function Title() {
+  return(
+    <h1 className='p-2 font-bold text-xl text-[#E1E5F2]'>
+      FreeCodeCamp Drum Machine
+    </h1>
+  )
+}
+
+function Credit() {
+  return(
+    <p className='text-[#E1E5F2]'>
+      Made by Alfian
+    </p>
+  )
+}
+
+function Control({power, setPower, vol, setVol}) {
+  return (
+    <div className="flex items-center justify-center w-full mb-12">
+      <label className="flex items-center cursor-pointer">
+        <div className="relative">
+        <input type="checkbox" className="sr-only" checked={power} onClick={() => setPower(!power)}/>
+        <div className={`block w-14 h-8 rounded-full ${power ? "bg-gray-600 " : "bg-[#E1E5F2]"}`}></div>
+        <div className={`absolute left-1 top-1 bg-[#1F7A8C] w-6 h-6 rounded-full transition ${power ? "" : "translate-x-full duration-300 ease-in-out"} `}></div>
+        </div>
+      </label>
+    </div>
+  )
+}
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [power, setPower] = React.useState(false)
+  const [vol, setVol] = React.useState(0.5)
 
   return (
-    <>
-      <header>
-        FCC Drum Machine
-      </header>
-    </>
+      <div 
+        id='drum-machine'
+        className='flex flex-col justify-center items-center h-screen bg-none'>
+        <Title />
+        <Control power={power} setPower={setPower} />
+
+        <Credit />
+      </div>
   )
 }
 
