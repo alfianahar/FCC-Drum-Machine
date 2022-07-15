@@ -56,14 +56,40 @@ function Credit() {
 }
 
 function Control({power, setPower, vol, setVol}) {
+
+  React.useEffect(() => {
+    const input = document.querySelector(".range");
+  
+  function setBackgroundSize(input) {
+    input.style.setProperty("--background-size", `${getBackgroundSize(input)}%`);
+  }
+  
+  setBackgroundSize(input);
+  
+  input.addEventListener("input", () => setBackgroundSize(input));
+  
+  function getBackgroundSize(input) {
+    const min = +input.min || 0;
+    const max = +input.max || 100;
+    const value = +input.value;
+  
+    const size = (value - min) / (max - min) * 100;
+  
+    return size;
+  }
+  }, [vol]);
   return (
-    <div className="flex items-center justify-center w-full mb-12">
-      <label className="flex items-center cursor-pointer">
+    <div className="flex flex-col items-center justify-center w-full ">
+      <label className="flex flex-col items-center cursor-pointer mb-4">
+        <span className='p-2 font-bold text-[#E1E5F2]'>POWER</span>
         <div className="relative">
-        <input type="checkbox" className="sr-only" checked={power} onClick={() => setPower(!power)}/>
-        <div className={`block w-14 h-8 rounded-full ${power ? "bg-gray-600 " : "bg-[#E1E5F2]"}`}></div>
-        <div className={`absolute left-1 top-1 bg-[#1F7A8C] w-6 h-6 rounded-full transition ${power ? "" : "translate-x-full duration-300 ease-in-out"} `}></div>
+          <input type="checkbox" className="sr-only" checked={power} onClick={() => setPower(!power)}/>
+          <div className={`block w-14 h-8 rounded-full ${power ? "bg-gray-600 " : "bg-[#E1E5F2]"}`}></div>
+          <div className={`absolute left-1 top-1 bg-[#1F7A8C] w-6 h-6 rounded-full transition ${power ? "" : "translate-x-full duration-300 ease-in-out"} `}></div>
         </div>
+      </label>
+      <label className="flex items-center cursor-pointer">
+        <input type='range' min={0} max={1} step={0.01} defaultValue={vol} onChange={e => setVol(Number(e.target.value))} className="range" />
       </label>
     </div>
   )
@@ -78,7 +104,10 @@ function App() {
         id='drum-machine'
         className='flex flex-col justify-center items-center h-screen bg-none'>
         <Title />
-        <Control power={power} setPower={setPower} />
+        <div className="flex flex-col p-6 border rounded-md">
+          <Control power={power} setPower={setPower} vol={vol} setVol={setVol} />
+
+        </div>
 
         <Credit />
       </div>
