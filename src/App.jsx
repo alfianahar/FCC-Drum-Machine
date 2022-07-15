@@ -77,7 +77,7 @@ function Control({power, setPower, vol, setVol}) {
   
     return size;
   }
-  }, [vol]);
+  }, []);
   return (
     <div className="flex flex-col items-center justify-center w-full ">
       <label className="flex flex-col items-center cursor-pointer mb-4">
