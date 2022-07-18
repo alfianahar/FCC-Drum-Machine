@@ -32,7 +32,7 @@ input[type='range']::-webkit-slider-thumb {
 input[type='range']::-webkit-slider-runnable-track {
   width: 200px;
   height: 10px;
-  background: linear-gradient(to right, #777, #777), #fff;
+  background: linear-gradient(to right, #777, #777), #E1E5F2;
   background-size: var(--background-size, 0%) 100%;
   background-repeat: no-repeat;
   border-radius: 5px;
@@ -42,7 +42,7 @@ input[type='range']::-webkit-slider-thumb {
   height: 30px;
   width: 30px;
   margin-top: -10px;
-  background: steelblue;
+  background: #1F7A8C;
   border-radius: 50%;
   border: 2px solid white;
 }
