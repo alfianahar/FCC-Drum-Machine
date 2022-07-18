@@ -90,7 +90,6 @@ function Control({power, setPower, vol, setVol, display, setDisplay}) {
     
   }, [vol]);
   
-
   return (
     <div className="flex flex-col items-center justify-center w-full ">
       <label className="flex flex-col items-center cursor-pointer mb-4">
@@ -111,6 +110,34 @@ function Control({power, setPower, vol, setVol, display, setDisplay}) {
   )
 }
 
+function Pads() {
+
+  const keypads = Object.keys(soundBank)
+
+  return (
+    <div className="grid grid-cols-3 gap-3 justify-items-center mt-4 mb-8">
+      <div>01</div>
+      <div>01</div>
+      <div>01</div>
+      <div>01</div>
+      <div>01</div>
+      <div>01</div>
+      <div>01</div>
+      <div>01</div>
+      <div>01</div>
+      {/* {keypads.map((pad, id) => {
+        console.log(pad)
+        return (
+          <div
+            key={pad+id}
+           />
+        )
+      }
+      )} */}
+    </div>
+  )
+}
+
 function App() {
   const [power, setPower] = React.useState(false)
   const [vol, setVol] = React.useState(0.5)
@@ -122,8 +149,8 @@ function App() {
         className='flex flex-col justify-center items-center h-screen bg-none'>
         <Title />
         <div className="flex flex-col p-6 border rounded-md bg-[#1F7A8C]/70">
+          <Pads />
           <Control power={power} setPower={setPower} vol={vol} setVol={setVol} display={display} setDisplay={setDisplay} />
-
         </div>
 
         <Credit />
