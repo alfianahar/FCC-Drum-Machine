@@ -200,7 +200,7 @@ function App() {
   return (
     <div
       id="drum-machine"
-      className="flex flex-col justify-center items-center h-screen bg-none"
+      className="flex flex-col justify-center items-center bg-none"
     >
       <Title />
       <div className="flex flex-col lg:flex-row p-6 border rounded-md bg-[#1F7A8C]/70 min-h-max">
