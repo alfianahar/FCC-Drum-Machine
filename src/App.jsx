@@ -41,7 +41,7 @@ const soundBank = {
 
 function Title() {
   return (
-    <h1 className="p-2 font-bold text-xl text-[#E1E5F2]">
+    <h1 className="p-2 mb-2 font-bold text-xl text-[#E1E5F2]">
       FreeCodeCamp Drum Machine
     </h1>
   );
@@ -97,7 +97,7 @@ function Control({ power, setPower, vol, setVol, display, setDisplay }) {
   }, [vol]);
 
   return (
-    <div className="flex flex-col items-center justify-center w-full ">
+    <div className="flex flex-col items-center justify-center mt-6 lg:mt-0 lg:ml-8 ">
       <label className="flex flex-col items-center cursor-pointer mb-4">
         <span className=" font-bold text-[#E1E5F2]">POWER</span>
         <div className="relative">
@@ -142,7 +142,7 @@ function Pad({ pad, play, power }) {
   return (
     <button
       type="button"
-      className="drum-pad border-2 rounded-md text-white w-14 h-14"
+      className="drum-pad border-2 rounded-md text-white p-10 h-0 w-0 flex justify-center items-center"
       onClick={play}
       id={soundBank[pad]}
       disabled={power}
@@ -162,11 +162,8 @@ function Pads({ setDisplay, power, vol, isActive }) {
 
   const play = e => {
     const keyboardKey = e.key ? e.key.toUpperCase() : e.target.childNodes[1].id;
-    console.log(keyboardKey);
     if (e.key && !keypads.includes(keyboardKey)) return;
     setDisplay(soundBank[keyboardKey].name);
-
-    
     
     const sound = document.getElementById(keyboardKey);
     const el = sound.parentElement
@@ -187,7 +184,7 @@ function Pads({ setDisplay, power, vol, isActive }) {
   }, [power, vol]);
 
   return (
-    <div className="grid grid-cols-3 gap-2 justify-items-center mt-4 mb-8 w-full lg:mr-8">
+    <div className="grid grid-cols-3 gap-2 p-2">
       {keypads.map((pad, id) => {
         return <Pad key={pad + id} pad={pad} play={play} power={power} />;
       })}
@@ -206,7 +203,7 @@ function App() {
       className="flex flex-col justify-center items-center h-screen bg-none"
     >
       <Title />
-      <div className="flex flex-col lg:flex-row p-6 border rounded-md bg-[#1F7A8C]/70">
+      <div className="flex flex-col lg:flex-row p-6 border rounded-md bg-[#1F7A8C]/70 min-h-max">
         <Pads setDisplay={setDisplay} power={power} vol={vol} />
         <Control
           power={power}
