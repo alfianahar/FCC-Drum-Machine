@@ -119,7 +119,7 @@ function Control({ power, setPower, vol, setVol, display, setDisplay }) {
           ></div>
         </div>
       </label>
-      <div className="p-1 mb-4 border border-2 rounded-md w-3/4 bg-[#E1E5F2] text-center h-9">
+      <div id="display" className="p-1 mb-4 border border-2 rounded-md w-3/4 bg-[#E1E5F2] text-center h-9">
         <span>{display}</span>
       </div>
       <label className="flex items-center cursor-pointer">
@@ -137,45 +137,60 @@ function Control({ power, setPower, vol, setVol, display, setDisplay }) {
   );
 }
 
-function Pad({element}) {
+function Pad({ pad, play, power }) {
+  // console.log(soundBank[pad])
   return (
-    <button 
-      type='button'
-      className='drum-pad border border-2 rounded-md w-full h-14 text-white shadow-lg shadow-[#E1E5F2]/50 focus:bg-[#E1E5F2] focus:text-black  focus:shadow-[#022B3A]/50 '
-      // onClick={handleClick} 
-      // id={bank1[element]} 
-      // disabled={!power} 
-      // style={{background: `${backgroundStyle}`}}
-      >
-      {element}
-      <audio id={element} src={soundBank[element].source} className='clip'></audio>
+    <button
+      type="button"
+      className="drum-pad border-2 rounded-md text-white w-14 h-14"
+      onClick={play}
+      id={soundBank[pad]}
+      disabled={power}
+    >
+      {pad}
+      <audio
+        id={pad}
+        src={soundBank[pad].source}
+        className="clip"
+      ></audio>
     </button>
-  )
+  );
 }
 
-function Pads() {
+function Pads({ setDisplay, power, vol, isActive }) {
   const keypads = Object.keys(soundBank);
 
+  const play = e => {
+    const keyboardKey = e.key ? e.key.toUpperCase() : e.target.childNodes[1].id;
+    console.log(keyboardKey);
+    if (e.key && !keypads.includes(keyboardKey)) return;
+    setDisplay(soundBank[keyboardKey].name);
+
+    
+    
+    const sound = document.getElementById(keyboardKey);
+    const el = sound.parentElement
+    el.classList.add('bg-[#E1E5F2]', 'text-black', 'shadow-[#022B3A]/50')
+    setTimeout(() => el.classList.remove('bg-[#E1E5F2]', 'text-black', 'shadow-[#022B3A]/50'), 100);
+    sound.currentTime = 0;
+    sound.volume = vol;
+    sound.play();
+  };
+
+  React.useEffect(() => {
+    if (power) {
+      return;
+    } else {
+      window.addEventListener('keydown', play);
+    }
+    return () => window.removeEventListener('keydown', play);
+  }, [power, vol]);
+
   return (
-    <div className="grid grid-cols-3 gap-2 justify-items-center mt-4 mb-8">
-      {/* <div>01</div>
-      <div>01</div>
-      <div>01</div>
-      <div>01</div>
-      <div>01</div>
-      <div>01</div>
-      <div>01</div>
-      <div>01</div>
-      <div>01</div> */}
+    <div className="grid grid-cols-3 gap-2 justify-items-center mt-4 mb-8 w-full lg:mr-8">
       {keypads.map((pad, id) => {
-        return (
-          <Pad
-            key={pad+id}
-            element={pad}
-           />
-        )
-      }
-      )}
+        return <Pad key={pad + id} pad={pad} play={play} power={power} />;
+      })}
     </div>
   );
 }
@@ -191,8 +206,8 @@ function App() {
       className="flex flex-col justify-center items-center h-screen bg-none"
     >
       <Title />
-      <div className="flex flex-col p-6 border rounded-md bg-[#1F7A8C]/70">
-        <Pads />
+      <div className="flex flex-col lg:flex-row p-6 border rounded-md bg-[#1F7A8C]/70">
+        <Pads setDisplay={setDisplay} power={power} vol={vol} />
         <Control
           power={power}
           setPower={setPower}

@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-gradient-to-b from-[#022B3A] to-[#1F7A8C] bg-no-repeat font-mono;
+    @apply bg-gradient-to-b from-[#022B3A] to-[#1F7A8C] bg-no-repeat font-mono p-8;
   }
   h1 {
     @apply p-2 font-bold text-xl text-[#E1E5F2];
