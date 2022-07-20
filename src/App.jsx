@@ -137,11 +137,28 @@ function Control({ power, setPower, vol, setVol, display, setDisplay }) {
   );
 }
 
+function Pad({element}) {
+  return (
+    <button 
+      type='button'
+      className='drum-pad border border-2 rounded-md w-full h-14 text-white shadow-lg shadow-[#E1E5F2]/50 focus:bg-[#E1E5F2] focus:text-black  focus:shadow-[#022B3A]/50 '
+      // onClick={handleClick} 
+      // id={bank1[element]} 
+      // disabled={!power} 
+      // style={{background: `${backgroundStyle}`}}
+      >
+      {element}
+      <audio id={element} src={soundBank[element].source} className='clip'></audio>
+    </button>
+  )
+}
+
 function Pads() {
   const keypads = Object.keys(soundBank);
 
   return (
-    <div className="grid grid-cols-3 gap-3 justify-items-center mt-4 mb-8">
+    <div className="grid grid-cols-3 gap-2 justify-items-center mt-4 mb-8">
+      {/* <div>01</div>
       <div>01</div>
       <div>01</div>
       <div>01</div>
@@ -149,17 +166,16 @@ function Pads() {
       <div>01</div>
       <div>01</div>
       <div>01</div>
-      <div>01</div>
-      <div>01</div>
-      {/* {keypads.map((pad, id) => {
-        console.log(pad)
+      <div>01</div> */}
+      {keypads.map((pad, id) => {
         return (
-          <div
+          <Pad
             key={pad+id}
+            element={pad}
            />
         )
       }
-      )} */}
+      )}
     </div>
   );
 }
